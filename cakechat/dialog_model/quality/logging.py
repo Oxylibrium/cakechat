@@ -4,6 +4,7 @@ import time
 from collections import namedtuple
 from datetime import datetime
 
+from six.moves import xrange
 import unicodecsv as csv
 
 from cakechat.config import DATA_DIR, PREDICTION_MODE_FOR_TESTS, LOG_CANDIDATES_NUM, MAX_PREDICTIONS_LENGTH

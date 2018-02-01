@@ -1,5 +1,8 @@
+from __future__ import print_function
 import os
 import sys
+
+from six.moves import xrange
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
@@ -69,9 +72,9 @@ def _compute_metrics(model, testset):
                 compute_recall_k, testset, context_to_weighted_responses, top_count=test_set_size / 4)
     }
 
-    print 'Test set size = %i' % test_set_size
+    print('Test set size = %i' % test_set_size)
     for metric_name, metric_value in metrics.iteritems():
-        print '%s = %s' % (metric_name, metric_value)
+        print('%s = %s' % (metric_name, metric_value))
 
 
 if __name__ == '__main__':

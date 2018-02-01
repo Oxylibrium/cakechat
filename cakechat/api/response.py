@@ -1,5 +1,7 @@
 import random
 
+from six.moves import xrange
+
 from cakechat.api.config import PREDICTION_MODE, NUM_BEST_CANDIDATES_TO_PICK_FROM, SAMPLING_ATTEMPTS_NUM, \
     DEFAULT_RESPONSE
 from cakechat.config import INPUT_CONTEXT_SIZE, INPUT_SEQUENCE_LENGTH, PREDICTION_MODES

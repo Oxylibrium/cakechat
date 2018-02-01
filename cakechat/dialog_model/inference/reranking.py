@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 from itertools import izip_longest
 
 import numpy as np
+from six.moves import xrange
 
 from cakechat.dialog_model.inference.service_tokens import ServiceTokensIDs
 from cakechat.dialog_model.inference.utils import get_sequence_score_by_thought_vector, get_sequence_score, \

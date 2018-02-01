@@ -1,6 +1,7 @@
 from itertools import izip_longest
 
 import numpy as np
+from six.moves import xrange
 import theano
 
 from cakechat.dialog_model.inference.candidates.abstract_generator import AbstractCandidatesGenerator

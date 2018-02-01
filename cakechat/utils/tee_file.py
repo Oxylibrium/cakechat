@@ -2,6 +2,8 @@ import cPickle as pickle
 import os
 import tempfile
 
+from six.moves import xrange
+
 
 def _pickle_iterable(filename, iterable):
     with open(filename, 'wb') as pickle_fh:

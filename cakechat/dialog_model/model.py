@@ -3,6 +3,7 @@ from collections import OrderedDict
 
 import lasagne
 import numpy as np
+from six.moves import xrange
 import theano
 import theano.tensor as T
 from lasagne.init import Normal

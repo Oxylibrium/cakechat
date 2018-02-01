@@ -3,6 +3,9 @@ from collections import namedtuple
 from itertools import imap, islice, izip
 
 import numpy as np
+from six import text_type
+from six.moves import xrange
+
 
 from cakechat.config import BASE_CORPUS_NAME, TRAIN_CORPUS_NAME, WORD_EMBEDDING_DIMENSION, INPUT_CONTEXT_SIZE, \
     HIDDEN_LAYER_DIMENSION, ENCODER_DEPTH, DECODER_DEPTH, INPUT_SEQUENCE_LENGTH, \
@@ -143,7 +146,7 @@ def transform_token_ids_to_sentences(y_ids, index_to_token):
             response_tokens.append(token_to_add)
 
         response_str = ' '.join(response_tokens)
-        if not isinstance(response_str, unicode):
+        if not isinstance(response_str, text_type):
             response_str = response_str.decode('utf-8')
 
         responses.append(response_str)
@@ -178,7 +181,7 @@ def transform_context_token_ids_to_sentences(x_ids, index_to_token):
                 sample_tokens.append(token_to_add)
 
             sample_str = ' '.join(sample_tokens)
-            if not isinstance(sample_str, unicode):
+            if not isinstance(sample_str, text_type):
                 sample_str = sample_str.decode('utf-8')
 
             context_samples.append(sample_str)
