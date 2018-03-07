@@ -3,6 +3,7 @@ import os
 import sys
 
 from six.moves import xrange
+from six import iteritems
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
@@ -73,7 +74,7 @@ def _compute_metrics(model, testset):
     }
 
     print('Test set size = %i' % test_set_size)
-    for metric_name, metric_value in metrics.iteritems():
+    for metric_name, metric_value in iteritems(metrics):
         print('%s = %s' % (metric_name, metric_value))
 
 

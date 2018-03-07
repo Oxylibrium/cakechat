@@ -99,7 +99,7 @@ def get_nn_responses(context_token_ids,
     response_tokens_ids = np.reshape(response_tokens_ids, (-1, output_seq_len))
     response_tokens = transform_token_ids_to_sentences(response_tokens_ids, nn_model.index_to_token)
 
-    lines_num = len(response_tokens) / output_candidates_num
+    lines_num = len(response_tokens) // output_candidates_num
     responses = [response_tokens[i * output_candidates_num:(i + 1) * output_candidates_num] for i in xrange(lines_num)]
 
     return responses

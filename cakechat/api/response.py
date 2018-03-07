@@ -56,7 +56,7 @@ def get_response(dialog_context, emotion):
     :return: dialog response conditioned on input emotion
     """
     tokenized_dialog_context = map(get_tokens_sequence, dialog_context)
-    tokenized_dialog_contexts = [tokenized_dialog_context]
+    tokenized_dialog_contexts = [list(tokenized_dialog_context)]
     context_tokens_ids = transform_contexts_to_token_ids(tokenized_dialog_contexts, _cakechat_model.token_to_index,
                                                          INPUT_SEQUENCE_LENGTH, INPUT_CONTEXT_SIZE)
 
