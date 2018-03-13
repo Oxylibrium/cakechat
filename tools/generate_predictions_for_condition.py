@@ -14,6 +14,7 @@ init_theano_env()
 from cakechat.config import QUESTIONS_CORPUS_NAME, INPUT_SEQUENCE_LENGTH, INPUT_CONTEXT_SIZE, \
     PREDICTION_MODES, PREDICTION_MODE_FOR_TESTS, DEFAULT_CONDITION, RANDOM_SEED
 from cakechat.utils.text_processing import get_tokens_sequence, replace_out_of_voc_tokens
+from cakechat.utils.tokenizer import Tokenizer
 from cakechat.utils.dataset_loader import get_tokenized_test_lines
 from cakechat.dialog_model.model_utils import transform_context_token_ids_to_sentences, \
     transform_contexts_to_token_ids, lines_to_context
@@ -24,7 +25,7 @@ np.random.seed(seed=RANDOM_SEED)
 
 
 def load_corpus(nn_model, corpus_name):
-    return get_tokenized_test_lines(corpus_name, set(nn_model.index_to_token.values()))
+    return get_tokenized_test_lines(corpus_name, nn_model.token_to_index)
 
 
 def process_text(nn_model, text):
@@ -67,7 +68,7 @@ def parse_args():
         default=PREDICTION_MODE_FOR_TESTS)
 
     argparser.add_argument('-d', '--data', action='store', help='Corpus name', default=QUESTIONS_CORPUS_NAME)
-    argparser.add_argument('-t', '--text', action='store', help='Context message that feed to the model', default=None)
+    argparser.add_argument('-t', '--text', action='append', help='Context message that feed to the model', default=None)
     argparser.add_argument('-c', '--condition', action='store', help='Condition', default=DEFAULT_CONDITION)
 
     return argparser.parse_args()
@@ -78,10 +79,13 @@ if __name__ == '__main__':
     nn_model = get_trained_model()
 
     if args.text:
-        tokenized_lines = process_text(nn_model, args.text.decode('utf8'))
+        print(args.text)
+        tokenizer = Tokenizer(nn_model.token_to_index, 32, 3)
+        contexts_token_ids = np.asarray([tokenizer.tokenize_context(args.text)])
+        print(contexts_token_ids)
     else:
         tokenized_lines = load_corpus(nn_model, args.data)
-
-    contexts_token_ids = transform_lines_to_contexts_token_ids(tokenized_lines, nn_model)
+        contexts_token_ids = transform_lines_to_contexts_token_ids(tokenized_lines[:2], nn_model)
+        print(contexts_token_ids)
 
     print_predictions(nn_model, contexts_token_ids, args.condition, prediction_mode=args.prediction_mode)

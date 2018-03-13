@@ -97,10 +97,10 @@ def predict(model_path=None,
     index_to_token = load_index_to_item(tokens_index_path)
     index_to_condition = load_index_to_item(conditions_index_path)
 
-    processed_test_set = get_tokenized_test_lines(QUESTIONS_CORPUS_NAME, set(index_to_token.values()))
-    processed_test_set = list(processed_test_set)
-
     nn_model, _ = get_nn_model(index_to_token, index_to_condition, nn_model_path=model_path)
+
+    processed_test_set = get_tokenized_test_lines(QUESTIONS_CORPUS_NAME, nn_model.token_to_index)
+    processed_test_set = list(processed_test_set)
 
     for cur_params, cur_path in zip(prediction_params, predictions_paths):
         _logger.info('Predicting with the following params: {}'.format(cur_params))

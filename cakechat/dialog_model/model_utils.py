@@ -55,7 +55,7 @@ def transform_contexts_to_token_ids(tokenized_contexts,
     :param add_start_end: add start/end tokens to sequence
     :return: X -- numpy array, dtype=np.int32, shape = (max_lines_num, max_context_len, max_line_len).
     """
-
+    # raise DeprecationWarning
     if max_contexts_num is None:
         if not isinstance(tokenized_contexts, list):
             raise TypeError('tokenized_lines should has list type if max_lines_num is not specified')
@@ -98,7 +98,7 @@ def transform_lines_to_token_ids(tokenized_lines, token_to_index, max_line_len, 
     :param add_start_end: add start/end tokens to sequence
     :return: X -- numpy array, dtype=np.int32, shape = (max_lines_num, max_line_len).
     """
-
+    # raise DeprecationWarning
     if max_lines_num is None:
         if not isinstance(tokenized_lines, list):
             raise TypeError('tokenized_lines should has list type if max_lines_num is not specified')
@@ -382,12 +382,13 @@ def transform_lines_to_nn_input(tokenized_dialog_lines, token_to_index):
 
     x_data_iterator = islice(x_data_iterator, 0, None, 2)
     y_data_iterator = islice(y_data_iterator, 1, None, 2)
-    n_dialogs /= 2
+    n_dialogs //= 2
 
     y_data_iterator, y_data_iterator_for_context = file_buffered_tee(y_data_iterator)
     x_data_iterator = _get_x_data_iterator_with_context(x_data_iterator, y_data_iterator_for_context)
 
     _logger.info('Iterating through lines to get input matrix')
+    # TODO: Single context
     x_ids = transform_contexts_to_token_ids(
         x_data_iterator, token_to_index, INPUT_SEQUENCE_LENGTH, INPUT_CONTEXT_SIZE, max_contexts_num=n_dialogs)
 

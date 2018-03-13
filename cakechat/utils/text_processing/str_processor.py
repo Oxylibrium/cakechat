@@ -26,7 +26,7 @@ def get_tokens_sequence(text, lower=True, check_unicode=True):
 
 
 def replace_out_of_voc_tokens(tokens, tokens_voc):
-    return map(lambda t: t if t in tokens_voc else SPECIAL_TOKENS.UNKNOWN_TOKEN, tokens)
+    return list(map(lambda t: t if t in tokens_voc else SPECIAL_TOKENS.UNKNOWN_TOKEN, tokens))
 
 
 def _capitalize_first_chars(text):

@@ -1,15 +1,15 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request
 
-from cakechat.api.response import get_response
+from cakechat.api.response import Responder
 from cakechat.api.utils import get_api_error_response, parse_dataset_param
-from cakechat.config import EMOTIONS_TYPES, DEFAULT_CONDITION
+from cakechat.config import DEFAULT_CONDITION, EMOTIONS_TYPES
 from cakechat.utils.logger import get_logger
 from cakechat.utils.profile import timer
 
 _logger = get_logger(__name__)
 
 app = Flask(__name__)
-
+responder = Responder()
 
 @app.route('/cakechat_api/v1/actions/get_response', methods=['POST'])
 @timer
@@ -29,7 +29,7 @@ def get_model_response():
         return get_api_error_response('Malformed request, emotion param "%s" is not in emotion list %s' %
                                       (emotion, list(EMOTIONS_TYPES)), 400, _logger)
 
-    response = get_response(dialog_context, emotion)
+    response = responder.get_response(dialog_context, emotion)
 
     if not response:
         _logger.error('No response for context: %s; emotion "%s"' % (dialog_context, emotion))
