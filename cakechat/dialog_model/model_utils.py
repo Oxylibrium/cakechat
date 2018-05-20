@@ -77,7 +77,7 @@ def transform_contexts_to_token_ids(tokenized_contexts,
             if add_start_end:
                 utterance = [SPECIAL_TOKENS.START_TOKEN] + utterance + [SPECIAL_TOKENS.EOS_TOKEN]
 
-            for token_idx, token in enumerate(utterance[:max_line_len]):
+            for token_idx, token in enumerate(islice(utterance, max_line_len)):
                 X[context_idx, utterance_offset + utterance_idx, token_idx] = token_to_index[token] \
                     if token in token_to_index else token_to_index[SPECIAL_TOKENS.UNKNOWN_TOKEN]
 
@@ -382,7 +382,7 @@ def transform_lines_to_nn_input(tokenized_dialog_lines, token_to_index):
 
     x_data_iterator = islice(x_data_iterator, 0, None, 2)
     y_data_iterator = islice(y_data_iterator, 1, None, 2)
-    n_dialogs /= 2
+    n_dialogs //= 2
 
     y_data_iterator, y_data_iterator_for_context = file_buffered_tee(y_data_iterator)
     x_data_iterator = _get_x_data_iterator_with_context(x_data_iterator, y_data_iterator_for_context)
