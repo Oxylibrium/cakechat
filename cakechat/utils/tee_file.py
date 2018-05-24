@@ -6,7 +6,8 @@ from six.moves import cPickle as pickle
 
 def _pickle_iterable(filename, iterable):
     with open(filename, 'wb') as pickle_fh:
-        pklr = pickle.Pickler(pickle_fh, pickle.HIGHEST_PROTOCOL)
+        # Pickle on HIGHEST_PROTOCOL breaks on Python 3.6.5
+        pklr = pickle.Pickler(pickle_fh, 2)
         for entry in iterable:
             pklr.dump(entry)
             pklr.clear_memo()
