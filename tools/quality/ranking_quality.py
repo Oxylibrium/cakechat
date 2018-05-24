@@ -41,7 +41,7 @@ def _get_context_to_weighted_responses(nn_model, testset, all_utterances):
     token_to_index = nn_model.token_to_index
 
     all_utterances_ids = transform_lines_to_token_ids(
-        map(get_tokens_sequence, all_utterances), token_to_index, OUTPUT_SEQUENCE_LENGTH, add_start_end=True)
+        list(map(get_tokens_sequence, all_utterances)), token_to_index, OUTPUT_SEQUENCE_LENGTH, add_start_end=True)
 
     context_to_weighted_responses = {}
 
