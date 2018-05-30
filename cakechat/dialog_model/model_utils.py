@@ -77,7 +77,7 @@ def transform_contexts_to_token_ids(tokenized_contexts,
             if add_start_end:
                 utterance = [SPECIAL_TOKENS.START_TOKEN] + utterance + [SPECIAL_TOKENS.EOS_TOKEN]
 
-            for token_idx, token in enumerate(islice(utterance, max_line_len)):
+            for token_idx, token in enumerate(utterance[:max_line_len]):
                 X[context_idx, utterance_offset + utterance_idx, token_idx] = token_to_index[token] \
                     if token in token_to_index else token_to_index[SPECIAL_TOKENS.UNKNOWN_TOKEN]
 
@@ -237,7 +237,7 @@ def get_w2v_embedding_matrix(tokenized_dialog_lines, index_to_token, add_start_e
 
 def get_training_batch(inputs, batch_size, random_permute=False):
     n_samples = inputs[0].shape[0]
-    n_batches = n_samples / batch_size
+    n_batches = n_samples // batch_size
     batches_seq = np.arange(n_batches)
     samples_seq = np.arange(n_samples)
 
@@ -245,8 +245,8 @@ def get_training_batch(inputs, batch_size, random_permute=False):
         np.random.shuffle(samples_seq)
 
     for i in batches_seq:
-        start = int(i * batch_size)
-        end = int((i + 1) * batch_size)
+        start = i * batch_size
+        end = (i + 1) * batch_size
         samples_ids = samples_seq[start:end]
         # yield batch_size selected sequences of x and y ids
         yield tuple(inp[samples_ids] for inp in inputs)

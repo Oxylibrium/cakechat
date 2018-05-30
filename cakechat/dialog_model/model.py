@@ -587,7 +587,7 @@ class CakeChatModel(object):
             # Work around numpy/python 3 regression: 
             # http://www.markhneedham.com/blog/2017/11/19/python-3-typeerror-unsupported-format-string-passed-to-numpy-ndarray-__format__/
             laconic_logger.info('\t{0:<40} dtype: {1:<10} shape: {2:<12} size: {3:<.2f}M'.format(
-                str(p.name), str(v.dtype), str(v.shape), float(param_size)))
+                p.name, repr(v.dtype), repr(v.shape), param_size))
             total_network_size += param_size
         laconic_logger.info('Total network size: {0:.1f} Mb'.format(total_network_size))
 
