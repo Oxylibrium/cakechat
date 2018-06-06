@@ -8,8 +8,8 @@ def get_api_error_response(message, code, logger):
 
 
 def _is_list_of_unicode_strings(data):
-    return (data and isinstance(data, (list, tuple)) and
-            all(isinstance(s, text_type) for s in data))
+    return bool(data and isinstance(data, (list, tuple)) and
+                all(isinstance(s, text_type) for s in data))
 
 
 def parse_dataset_param(params, param_name, required=True):
