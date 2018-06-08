@@ -70,7 +70,7 @@ def _compute_metrics(model, testset):
             compute_retrieval_metric_mean(compute_recall_k, testset, context_to_weighted_responses, top_count=10),
         'mean_recall@25%':
             compute_retrieval_metric_mean(
-                compute_recall_k, testset, context_to_weighted_responses, top_count=test_set_size / 4)
+                compute_recall_k, testset, context_to_weighted_responses, top_count=test_set_size // 4)
     }
 
     print('Test set size = %i' % test_set_size)
