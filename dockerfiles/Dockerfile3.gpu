@@ -49,6 +49,9 @@ RUN apt-get update && apt-get install -y \
 # Link BLAS library to use OpenBLAS using the alternatives mechanism (https://www.scipy.org/scipylib/building/linux.html#debian-ubuntu)
 	update-alternatives --set libblas.so.3 /usr/lib/openblas-base/libblas.so.3
 
+# Set python3 to default python, cmake fails without it
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+
 # Install up-to-date pip3
 RUN pip3 --no-cache-dir install -U pip
 
